@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS agencia_viagem;
+CREATE DATABASE agenciaviagens;
 
-USE agencia_viagem;
+USE agenciaviagens;
 
 CREATE TABLE cliente (
 	id_cliente INT AUTO_INCREMENT PRIMARY KEY,
@@ -12,6 +12,12 @@ CREATE TABLE cliente (
 	passaporte VARCHAR(20) UNIQUE  
 );
 
+CREATE TABLE servico_adicional (
+	id_servico INT AUTO_INCREMENT PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	descricao TEXT,
+	preco DECIMAL(10,2) NOT NULL
+);
 CREATE TABLE pacote_viagem (
 	id_pacote INT AUTO_INCREMENT PRIMARY KEY,
 	nome VARCHAR(100) NOT NULL,
@@ -22,13 +28,6 @@ CREATE TABLE pacote_viagem (
 	descricao TEXT
 );
 
-
-CREATE TABLE servico_adicional (
-	id_servico INT AUTO_INCREMENT PRIMARY KEY,
-	nome VARCHAR(100) NOT NULL,
-	descricao TEXT,
-	preco DECIMAL(10,2) NOT NULL
-);
 
 CREATE TABLE pedido (
 	id_pedido INT AUTO_INCREMENT PRIMARY KEY,
@@ -47,40 +46,33 @@ CREATE TABLE pedido_servico (
 	FOREIGN KEY (id_servico) REFERENCES servico_adicional(id_servico)
 );
 
-INSERT INTO cliente (nome, telefone, email, tipo, cpf) 
-VALUES ('Borges', '61981781838', 'borges@hotmail.com', 'nacional', '055.900.600-99'),
-('Ana Souza', '61991234567', 'ana.souza@gmail.com', 'nacional', '123.456.789-00'),
-('Lucas Ferreira', '11987654321', 'lucas.f@gmail.com', 'nacional', '987.654.321-00');
+INSERT INTO cliente (nome, telefone, email, tipo, cpf) VALUES 
+('Fernanda Oliveira', '11987654321', 'fernanda.oliveira@outlook.com', 'nacional', '123.456.789-01'),
+('Roberto Santos', '21976543210', 'roberto.santos@yahoo.com', 'nacional', '234.567.890-12'),
+('Juliana Costa', '31965432109', 'juliana.costa@gmail.com', 'nacional', '345.678.901-23');
 
-INSERT INTO cliente (nome, telefone, email, tipo, passaporte) 
-VALUES 
-  ('Emily Johnson', '+447912345678', 'emily.j@hotmail.co.uk', 'estrangeiro', 'X1234567'),
-  ('Taro Yamada', '+81312345678', 'taro.y@japan.jp', 'estrangeiro', 'JP998877');
+INSERT INTO cliente (nome, telefone, email, tipo, passaporte) VALUES 
+('Michael Johnson', '+12015551234', 'michael.johnson@usa.com', 'estrangeiro', 'US12345678'),
+('Emma Schmidt', '+491511234567', 'emma.schmidt@germany.de', 'estrangeiro', 'DE87654321');
 
-INSERT INTO pacote_viagem (nome, destino, duracao_dias, preco, tipo, descricao) 
-VALUES 
-  ('Aventura na Amazônia', 'Manaus', 7, 2999.90, 'aventura', 'Exploração de trilhas e passeio de barco'),
-  ('Luxo em Paris', 'Paris', 5, 9999.00, 'luxo', 'Hospedagem 5 estrelas com city tour completo'),
-  ('Rota Cultural Mineira', 'Ouro Preto', 3, 1200.50, 'cultural', 'Visitas a museus e igrejas históricas'),
-  ('Surpresa no Deserto', 'Dubai', 6, 7500.00, 'outro', 'Safari no deserto com jantar árabe');
+INSERT INTO pacote_viagem (nome, destino, duracao_dias, preco, tipo, descricao) VALUES 
+('Serra Gaúcha', 'Gramado', 4, 3200.00, 'romântico', 'Passeios pelos pontos turísticos de Gramado e Canela'),
+('Caribe Brasileiro', 'Fernando de Noronha', 7, 8500.00, 'luxo', 'Hospedagem em resort à beira-mar com mergulhos inclusos'),
+('Cultura Japonesa', 'São Paulo', 3, 1800.00, 'cultural', 'Tour pelo bairro da Liberdade e experiências gastronômicas');
 
-INSERT INTO servico_adicional (nome, descricao, preco)
-VALUES 
-  ('Seguro Viagem', 'Cobertura internacional contra imprevistos', 199.99),
-  ('Transfer Aeroporto', 'Transporte privativo de ida e volta', 150.00),
-  ('Passeio Extra', 'Passeio turístico adicional opcional', 350.00),
-  ('Refeição Especial', 'Pacote de refeições em restaurantes parceiros', 400.00);
+INSERT INTO servico_adicional (nome, descricao, preco) VALUES 
+('Aluguel de Carro', 'Carro econômico por período da viagem', 450.00),
+('Fotógrafo Profissional', 'Sessão fotográfica durante passeios', 600.00),
+('Jantar Temático', 'Experiência gastronômica especial', 350.00);
 
-INSERT INTO pedido (id_cliente, id_pacote, data_contratacao)
-VALUES 
-  (1, 2, '2025-04-22'),
-  (2, 1, '2025-04-23'),
-  (3, 3, '2025-04-24');
+INSERT INTO pedido (id_cliente, id_pacote, data_contratacao) VALUES 
+(2, 1, '2025-06-15'),
+(1, 3, '2025-06-18'),
+(4, 2, '2025-06-20');
 
-INSERT INTO pedido_servico (id_pedido, id_servico)
-VALUES 
-  (1, 1),
-  (1, 2),
-  (2, 3),
-  (3, 1),
-  (3, 4);
+INSERT INTO pedido_servico (id_pedido, id_servico) VALUES 
+(1, 1),
+(1, 3),
+(2, 2),
+(3, 1),
+(3, 2);
